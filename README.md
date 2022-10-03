@@ -1,2 +1,2 @@
 # idea-plugin
-idea的插件系列
+idea的一系列插件
