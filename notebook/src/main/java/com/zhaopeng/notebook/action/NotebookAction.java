@@ -4,7 +4,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.ui.MessageDialogBuilder;
-import com.intellij.openapi.ui.messages.MessageDialog;
 import com.zhaopeng.notebook.data.DataCenter;
 import com.zhaopeng.notebook.dialog.NotebookDialog;
 import org.apache.commons.lang.StringUtils;
@@ -22,8 +21,7 @@ public class NotebookAction extends AnAction {
         DataCenter.CUR_FILE_TYPE = DataCenter.CUR_FILE_NAME.substring(
                 DataCenter.CUR_FILE_NAME.lastIndexOf(".") + 1);
         if(StringUtils.isEmpty(DataCenter.SELECT_TEXT)) {
-            MessageDialogBuilder.okCancel("错误", "请选中要添加笔记的代码！").yesText("确定").noText("取消")
-                    .ask(e.getProject());
+            MessageDialogBuilder.yesNo("错误", "请选中要添加笔记的代码！").yesText("确定").noText("取消").show();
             return;
         }
         // 打开弹出层

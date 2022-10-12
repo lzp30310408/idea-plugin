@@ -38,8 +38,7 @@ public class NotebookWindow {
         createBtn.addActionListener(al -> {
             String text = titleContent.getText();
             if (StringUtils.isEmpty(text)) {
-                MessageDialogBuilder.okCancel("错误", "请选择生成文件名!").yesText("确认").noText("取消")
-                        .ask(project);
+                MessageDialogBuilder.yesNo("错误", "请选择生成文件名!").yesText("确认").noText("取消").show();
                 return;
             }
             // 用户选择文件位置后输出文件
@@ -53,11 +52,9 @@ public class NotebookWindow {
                 AbstractFreemarkerProcessor processor = new MDFreemarkerProcessor();
                 try {
                     processor.process(sourceNoteData);
-                    MessageDialogBuilder.okCancel("完成", "文件生成完成!").yesText("确认").noText("取消")
-                            .ask(project);
+                    MessageDialogBuilder.yesNo("完成", "文件生成完成!").yesText("确认").noText("取消").show();
                 } catch (TemplateException | IOException e) {
-                    MessageDialogBuilder.okCancel("失败", "文件生成异常!").yesText("确认").noText("取消")
-                            .ask(project);
+                    MessageDialogBuilder.yesNo("失败", "文件生成异常!").yesText("确认").noText("取消").show();
                     throw new RuntimeException(e);
                 }
 

@@ -2,11 +2,11 @@ package com.zhaopeng.notebook.dialog;
 
 import com.intellij.notification.*;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.ui.EditorTextField;
 import com.zhaopeng.notebook.data.DataCenter;
 import com.zhaopeng.notebook.data.DataConvert;
 import com.zhaopeng.notebook.data.Notebook;
-import jnr.ffi.mapper.DataConverter;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,10 +24,6 @@ public class NotebookDialog extends DialogWrapper {
     private static EditorTextField TITLE = null;
 
     private static EditorTextField CONTENT = null;
-
-    private static NotificationGroup notificationGroup = NotificationGroup.create("测试通知",
-            NotificationDisplayType.BALLOON, false, null, null, null,
-            null);
 
     public NotebookDialog() {
         super(true);
@@ -58,16 +54,12 @@ public class NotebookDialog extends DialogWrapper {
             String title = TITLE.getText();
             String content = CONTENT.getText();
             if (StringUtils.isEmpty(title)) {
-                Notification notification = notificationGroup.createNotification("保存失败",
-                        "标题不能为空。", NotificationType.ERROR);
-                Notifications.Bus.notify(notification);
+                MessageDialogBuilder.yesNo("错误", "标题不能为空！").yesText("确定").noText("取消").show();
                 TITLE.requestFocus();
                 return;
             }
             if (StringUtils.isEmpty(content)) {
-                Notification notification = notificationGroup.createNotification("保存失败",
-                        "内容不能为空。", NotificationType.ERROR);
-                Notifications.Bus.notify(notification);
+                MessageDialogBuilder.yesNo("错误", "内容不能为空！").yesText("确定").noText("取消").show();
                 CONTENT.requestFocus();
                 return;
             }
@@ -75,9 +67,7 @@ public class NotebookDialog extends DialogWrapper {
                     DataCenter.SELECT_TEXT);
             DataCenter.NOTEBOOK_LIST.add(notebook);
             DataCenter.TABLE_MODEL.addRow(DataConvert.toStringify(notebook));
-            Notification notification = notificationGroup.createNotification("保存成功",
-                    "笔记已保存。", NotificationType.INFORMATION);
-            Notifications.Bus.notify(notification);
+            MessageDialogBuilder.yesNo("提示", "笔记已保存！").yesText("确定").noText("取消").show();
             NotebookDialog.this.dispose();
         });
         JButton cancel = new JButton("取消");

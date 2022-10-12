@@ -12,8 +12,8 @@ public class DataConvert {
         Object[] objects = new Object[4];
         objects[0] = notebook.getTitle();
         objects[1] = notebook.getContent();
-        objects[2] = notebook.getFileName();
-        objects[3] = notebook.getCode();
+        objects[2] = notebook.getCode();
+        objects[3] = notebook.getFileName();
         return objects;
     }
 
